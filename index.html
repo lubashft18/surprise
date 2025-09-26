@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Love Code Login 💕</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-box {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 320px;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .login-box h2 {
+      color: #ff2e63;
+      margin-bottom: 15px;
+      font-size: 1.6rem;
+    }
+
+    .display {
+      background: #ffe4ec;
+      padding: 15px;
+      font-size: 1.5rem;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      letter-spacing: 8px;
+      font-weight: bold;
+      color: #ff2e63;
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .keypad button {
+      padding: 15px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 50%;
+      background: #ff2e63;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .keypad button:hover {
+      background: #ff6fa5;
+      transform: scale(1.1);
+    }
+
+    .btn-wide {
+      grid-column: span 3;
+      border-radius: 20px;
+    }
+
+    .message {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 1rem;
+      color: red;
+      min-height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>💕 Love Code 💕</h2>
+    <div class="display" id="display">____</div>
+    <div class="keypad">
+      <button onclick="pressNum('1')">1</button>
+      <button onclick="pressNum('2')">2</button>
+      <button onclick="pressNum('3')">3</button>
+      <button onclick="pressNum('4')">4</button>
+      <button onclick="pressNum('5')">5</button>
+      <button onclick="pressNum('6')">6</button>
+      <button onclick="pressNum('7')">7</button>
+      <button onclick="pressNum('8')">8</button>
+      <button onclick="pressNum('9')">9</button>
+      <button onclick="clearCode()">✖️</button>
+      <button onclick="pressNum('0')">0</button>
+      <button onclick="checkCode()">Enter</button>
+      <button class="btn-wide" onclick="clearCode()">Clear</button>
+    </div>
+    <p class="message" id="message"></p>
+  </div>
+<audio id="bg-music" src="song/sound-effect-you-are-my-sunshine-music-box-263230 (2).mp3" autoplay loop></audio>
+
+  <script>
+    const correctCode = "020123"; // your love code
+    let enteredCode = "";
+
+    function pressNum(num) {
+      if (enteredCode.length < correctCode.length) {
+        enteredCode += num;
+        updateDisplay();
+      }
+    }
+
+    function updateDisplay() {
+      let display = document.getElementById("display");
+      display.innerText = "●".repeat(enteredCode.length).padEnd(correctCode.length, "_");
+    }
+
+    function clearCode() {
+      enteredCode = "";
+      updateDisplay();
+      document.getElementById("message").innerText = "";
+    }
+
+    function checkCode() {
+      if (enteredCode === correctCode) {
+        window.location.href = "welcome.html"; // redirect immediately
+      } else {
+        const msg = document.getElementById("message");
+        msg.innerText = "💔 Wrong code, my love… Try again!";
+        enteredCode = "";
+        updateDisplay();
+      }
+    }
+
+    // Initialize display
+    updateDisplay();
+
+    
+       // Try to autoplay when the page loads
+  window.addEventListener("load", () => {
+    const music = document.getElementById("bg-music");
+    music.play().catch(() => {
+      console.log("Autoplay blocked. Will start after first interaction.");
+    });
+  });
+
+  // Ensure it starts when user clicks anywhere
+  document.addEventListener("click", () => {
+    const music = document.getElementById("bg-music");
+    if (music.paused) {
+      music.play();
+    }
+  });
+  </script>
+</body>
+</html>

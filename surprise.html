@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Realistic Flip Book</title>
+  <style>
+    body {
+ background: radial-gradient(circle at center, #ffdde1, #ee9ca7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+       font-family: 'Segoe Script', cursive;
+    }
+
+    .book {
+      position: relative;
+      width: 260px;
+      height: 370px;
+      perspective: 2000px;
+    }
+
+    .page {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 4px 4px 15px rgba(0,0,0,0.2);
+      transition: transform 1s ease;
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+
+    /* stacking order */
+    .page:nth-child(1) { z-index: 10; }
+    .page:nth-child(2) { z-index: 9; }
+    .page:nth-child(3) { z-index: 8; }
+    .page:nth-child(4) { z-index: 7; }
+    .page:nth-child(5) { z-index: 6; }
+    .page:nth-child(6) { z-index: 5; }
+    .page:nth-child(7) { z-index: 4; }
+    .page:nth-child(8) { z-index: 3; }
+    .page:nth-child(9) { z-index: 2; }
+    .page:nth-child(10) { z-index: 1; }
+
+    /* cover page */
+    .page.cover {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+       background: linear-gradient(135deg, #ff6f91, #ff71af);
+    }
+    .page.cover h3 {
+      margin: 20px;
+      font-size: 20px;
+      background: linear-gradient(45deg, #2c1111, #ef0606);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+     
+    }
+    .page.cover img {
+      width: 80%;
+      height: 50%;
+      border-radius: 50%;
+      border: 5px solid #ffffff;
+    }
+
+    /* flip effect */
+    .page {
+      transform-origin: left;
+    }
+    .page.flipped {
+      transform: rotateY(-180deg);
+      z-index: 0 !important;
+    }
+
+    /* inside content */
+    .page img {
+      width: 80%;
+      border-radius: 12px;
+      margin: 15px auto;
+      display: block;
+      box-shadow: 0 0 15px rgba(254, 20, 137, 0.788);
+    }
+    .page p, .page h3 {
+      text-align: center;
+      margin: 5px;
+      font-size: 14px;
+      color: #333;
+    }
+    .page h3 {
+      font-weight: bold;
+      color: #ff4b1f;
+    }
+
+    
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      color: #ff4d6d;
+      font-size: 20px;
+      animation: floatUp 6s infinite ease-in;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+    }
+
+    .page.cover h3 {
+  animation: 1s blink linear infinite;
+  text-align: center;
+}
+@keyframes blink {
+  0% { color: #fff; }
+  25% { color: #ff69b4; }
+  50% { color: #ffb6c1; }
+  75% { color: #ffc1cc; }
+  100% { color: #ffe4e1; }
+}
+  </style>
+</head>
+<body>
+  <div class="book">
+    <div class="page cover">
+      <h3>Happy Birthday Love💖🌸</h3>
+      <img src="images/ff3400c0-296b-48a4-a05b-c08dec31a6c2.jpg" alt="cover">
+    </div>
+
+    <div class="page">
+      <h3>HAPPY BIRTHDAY <br>MY LOVE</h3>
+      <p class="dear" style="text-align: left;">Dear Love,</p>
+      <p>
+        Happy Birthday, Mahal 💖 Even though we’re far apart on your special day,  
+        I hope this little surprise brings a smile to your face and warmth to your heart.  
+        You mean the world to me, and I’m so blessed to have you in my life.  
+        Enjoy your day, ayaw sige’g pasaway ha 😘 remember gurang kana hehe,  
+        I love you endlessly, mahal… mwuahhh 💕✨
+</p>
+
+      <p>– Dada</p>
+    </div>
+
+    <div class="page">
+      <img src="images/5864c816-d6e1-45ee-b487-bf45b6ebe83a.jpg" style="height: 75%;" alt="Memory 1">
+      <p>🌹 Mahal, every time I think of you, my heart smiles🌹</p>
+    </div>
+
+      <div class="page">
+      <img src="images/6591653a-86fd-4d86-9939-a125033403e8.jpg" alt="Memory 2">
+      <p>🌸With you, I’ve found my forever. 🌸</p>
+    </div>
+
+    <div class="page">
+      <img src="images/1b67e564-50f6-4c9c-a0fa-cc5bc631e31b.jpg" style="height: 75%;" alt="Memory3">
+      <p>💖I fall in love with you a little more every single day 💖</p>
+    </div>
+
+    <div class="page">
+      <img src="images/ac336fb2-4b33-4b9c-932c-ca37e0371516.jpg" alt="Memory 4">
+      <p>🌸Every time I miss you, I remind myself how lucky I am to love you.🌸</p>
+    </div>
+
+    <div class="page">
+      <img src="images/06bf42f6-af88-427e-bfb9-2b60d740a643.jpg" alt="Memory 5">
+      <p>✨You’re not just in my heart, you are my heart. ✨</p>
+    </div>
+
+      <div class="page">
+      <img src="images/3d59d686-3a37-44d5-8892-0d264c9a2be4.jpg" style="height: 75%;" alt="Memory 5">
+      <p>💕I don’t need the whole world, I just need you. 💕</p>
+    </div>
+
+      <div class="page">
+      <img src="images/df741071-4e99-40ee-b1ef-ee1afb37cd6a.jpg" style="height: 75%;"alt="Memory 4">
+      <p>❤️No matter the distance, my love for you grows stronger every day❤️</p>
+    </div>
+
+     <div class="page">
+      <img src="images/c17a38d0-95c7-49a6-afde-24aa90907568.jpg" style="height: 75%;"alt="Memory 4">
+      <p>🌹Mahal, you’re my reason, my happiness, and my always.🌹</p>
+    </div>
+
+    <div class="page">
+      <img src="images/fac5ddc1-9a13-4ad2-b20f-929956bceac6.jpg" style="height: 75%;"alt="Memory 4">
+      <p>💖Choosing you is the best decision I made 💖</p>
+    </div>
+
+
+    
+    
+  </div>
+ <!-- Floating hearts effect -->
+  <div class="hearts"></div>
+
+  <audio id="bg-music" src="song/Blue Yung Kai lyrics mood edits.mp3" autoplay loop></audio>
+
+
+  <script>
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 20 + 15 + "px";
+      document.querySelector(".hearts").appendChild(heart);
+
+      setTimeout(() => { heart.remove(); }, 6000);
+    }
+    setInterval(createHeart, 800);
+  </script>
+
+  <script>
+    const pages = document.querySelectorAll(".page");
+    let current = 0;
+
+    pages.forEach((page, i) => {
+      page.addEventListener("click", () => {
+        if (i === current) {
+          page.classList.add("flipped");
+          current++;
+        } else if (i === current - 1) {
+          page.classList.remove("flipped");
+          current--;
+        }
+      });
+    });
+     // Try to autoplay when the page loads
+  window.addEventListener("load", () => {
+    const music = document.getElementById("bg-music");
+    music.play().catch(() => {
+      console.log("Autoplay blocked. Will start after first interaction.");
+    });
+  });
+
+  // Ensure it starts when user clicks anywhere
+  document.addEventListener("click", () => {
+    const music = document.getElementById("bg-music");
+    if (music.paused) {
+      music.play();
+    }
+  });
+  </script>
+</body>
+</html>
