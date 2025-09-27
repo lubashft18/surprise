@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
   <title>Love Code Login 💕</title>
   <style>
@@ -81,6 +82,42 @@
       color: red;
       min-height: 20px;
     }
+
+    /* Smartphones (max-width: 600px) */
+@media screen and (max-width: 600px) {
+  .login-box {
+    width: 75%;       /* take almost full screen */
+    padding: 35px;    /* more padding for touch comfort */
+    font-size: 1.1rem;
+  }
+
+  .login-box h2 {
+    font-size: 1.8rem;
+  }
+
+  .keypad button {
+    padding: 20px;    /* bigger buttons for fingers */
+    font-size: 1.4rem;
+  }
+
+  .display {
+    font-size: 1.8rem;
+    letter-spacing: 10px;
+  }
+}
+
+/* Tablets (601px to 900px) */
+@media screen and (max-width: 900px) and (min-width: 601px) {
+  .login-box {
+    width: 70%;
+    padding: 30px;
+  }
+
+  .keypad button {
+    padding: 18px;
+    font-size: 1.3rem;
+  }
+}
   </style>
 </head>
 <body>
