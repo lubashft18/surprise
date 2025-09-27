@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Realistic Flip Book</title>
+
+  <!-- Added font for a romantic heading -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
     body {
  background: radial-gradient(circle at center, #ffdde1, #ee9ca7);
@@ -133,13 +137,214 @@
   100% { color: #ffe4e1; }
 }
   </style>
+
+  <!-- =========================
+       ADDITIONAL ROMANTIC STYLING
+       (added on top of your original code;
+       nothing removed — only enhancements)
+       ========================= -->
+  <style>
+    /* soft vignette + warm halo behind book */
+    .book::before{
+      content: "";
+      position: absolute;
+      inset: -28px;
+      border-radius: 18px;
+      background: radial-gradient(ellipse at center, rgba(255,150,170,0.18), rgba(255,150,170,0) 45%);
+      filter: blur(18px);
+      z-index: -2;
+      pointer-events: none;
+    }
+    .book::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:12px;
+      box-shadow: inset 0 24px 60px rgba(255,120,150,0.03);
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    /* subtle paper shade & thin edge for thickness */
+    .page {
+      background: linear-gradient(180deg, #fffefc 0%, #fff6f9 100%);
+      border: 1px solid rgba(255,70,120,0.03);
+      transition: transform 900ms cubic-bezier(.2,.9,.2,1), box-shadow 320ms;
+      will-change: transform;
+      overflow: hidden;
+    }
+    .page::before{
+      /* left page edge to simulate thickness */
+      content: "";
+      position: absolute;
+      left: -6px;
+      top: 8px;
+      bottom: 8px;
+      width: 6px;
+      background: linear-gradient(180deg, rgba(255,200,220,0.95), rgba(255,120,160,0.95));
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      box-shadow: 0 2px 12px rgba(255,100,140,0.06);
+      z-index: -1;
+    }
+
+    /* cover ribbon with message */
+    .page.cover::after{
+      content: "With all my heart";
+      position: absolute;
+      top: 10px;
+      right: -20px;
+      transform: rotate(12deg);
+      color: rgba(255,255,255,0.95);
+      font-family: "Dancing Script", cursive;
+      background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      padding: 8px 22px;
+      font-size: 0.80rem;
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(255,70,120,0.08);
+      pointer-events:none;
+    }
+
+    /* hover tilt (only when not flipped) */
+    .page:not(.flipped):hover{
+      transform: rotateY(-12deg) translateZ(8px);
+      box-shadow: 0 22px 60px rgba(255,90,140,0.12);
+    }
+
+    /* small warm glow during flipping */
+    .page.flipping-glow{
+      box-shadow: 0 30px 90px rgba(255,90,140,0.14);
+      transform-origin: left;
+    }
+
+    /* image soft glow on flip */
+    .page img {
+      transition: transform .6s ease, filter .6s ease, box-shadow .6s ease;
+      filter: drop-shadow(0 10px 25px rgba(255,40,120,0.07));
+    }
+    .page.flipping-glow img{
+      transform: scale(1.03);
+      filter: drop-shadow(0 22px 40px rgba(255,40,120,0.12));
+    }
+
+    /* tiny romantic sparkles (created by JS) */
+    .tiny-spark {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff7, rgba(255,200,210,0.9));
+      box-shadow: 0 4px 18px rgba(255,160,190,0.6);
+      pointer-events: none;
+      will-change: transform, opacity;
+      opacity: 0.9;
+    }
+    @keyframes sparkleFloat {
+      0% { transform: translateY(0) scale(0.75); opacity:1; }
+      100% { transform: translateY(-80px) scale(1.6); opacity:0; }
+    }
+
+    /* a gentle blush overlay when book is idle */
+    .book .blush {
+      position:absolute;
+      inset:0;
+      border-radius:14px;
+      background: radial-gradient(circle at 40% 30%, rgba(255,190,210,0.06), transparent 20%),
+                  radial-gradient(circle at 70% 70%, rgba(255,140,180,0.03), transparent 12%);
+      pointer-events:none;
+      z-index: 0;
+    }
+
+    /* responsive tweak - keep proportions on small screens */
+    @media (max-width:420px){
+      .book{ width: 220px; height: 320px; }
+    }
+
+    /* ======= Title styles (ADDED) ======= */
+    .title-wrap {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 60;
+      text-align: center;
+      pointer-events: none;
+    }
+    .book-title {
+      font-family: "Dancing Script", 'Segoe Script', cursive;
+      font-size: 2.3rem;
+      text-align: center;
+      margin: 0;
+      line-height: 1;
+      letter-spacing: 0.6px;
+      /* shimmering gradient */
+      background: linear-gradient(90deg, #fff 15%, #ffdcec 45%, #fff 70%);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 10px 30px rgba(255,80,140,0.12);
+      animation: titleFloat 4s ease-in-out infinite, titleShimmer 3.6s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes titleFloat {
+      0% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-6px); }
+      100% { transform: translateX(-50%) translateY(0); }
+    }
+    @keyframes titleShimmer {
+      0% { background-position: -150% 0; }
+      100% { background-position: 150% 0; }
+    }
+    .book-sub {
+      font-family: "Poppins", sans-serif;
+      font-size: 0.9rem;
+      color: rgba(252, 30, 108, 0.95);
+      margin-top: 6px;
+      text-shadow: 0 4px 16px rgba(255,120,160,0.06);
+      pointer-events: none;
+      opacity: 0.95;
+    }
+    .title-heart {
+      display:inline-block;
+      margin-left: 8px;
+      font-size: 1.05em;
+      transform-origin: center;
+      animation: heartBeat 1.2s infinite ease-in-out;
+      color: #ff2e63;
+      pointer-events: none;
+      text-shadow: 0 8px 18px rgba(255,80,140,0.15);
+    }
+    @keyframes heartBeat {
+      0% { transform: scale(1); }
+      45% { transform: scale(1.18); }
+      60% { transform: scale(0.98); }
+      100% { transform: scale(1); }
+    }
+
+    /* small responsive title adjustments */
+    @media (max-width:420px){
+      .book-title { font-size: 1.8rem; }
+      .book-sub { font-size: 0.8rem; }
+      .title-wrap { top: 12px; }
+    }
+  </style>
 </head>
 <body>
+  
+  <!-- ========== NEW: Decorative romantic title (non-destructive) ========== -->
+  <div class="title-wrap" aria-hidden="true">
+    <h1 class="book-title">Book of Love <span class="title-heart">💖</span></h1>
+    <div class="book-sub">A little book of our sweetest memories ✨</div>
+  </div>
+  <!-- ====================================================================== -->
+
   <div class="book">
     <div class="page cover">
-      <h3>Happy Birthday Love💖🌸</h3>
+      <h3>HAPPY BIRTHDAY LOVE💖🌸</h3>
       <img src="images/ff3400c0-296b-48a4-a05b-c08dec31a6c2.jpg" alt="cover">
     </div>
+
 
     <div class="page">
       <h3>HAPPY BIRTHDAY <br>MY LOVE</h3>
@@ -207,6 +412,9 @@
  <!-- Floating hearts effect -->
   <div class="hearts"></div>
 
+  <!-- extra blush overlay -->
+  <div class="blush" aria-hidden="true"></div>
+
   <audio id="bg-music" src="song/Blue Yung Kai lyrics mood edits.mp3" autoplay loop></audio>
 
 
@@ -254,6 +462,123 @@
       music.play();
     }
   });
+  </script>
+
+  <!-- =========================
+       ROMANTIC EFFECTS SCRIPT
+       (ADDED AFTER YOUR ORIGINAL SCRIPTS)
+       - page-turn chirp (WebAudio)
+       - tiny sparkles on click
+       - extra petals for atmosphere
+       - flipping visual glow
+       ========================= -->
+  <script>
+    (function(){
+      // ensure DOM ready (should already be since file bottom)
+      const book = document.querySelector('.book');
+      const heartsLayer = document.querySelector('.hearts');
+
+      // WebAudio flip chirp (polite: created on first user gesture)
+      let audioCtx = null;
+      function ensureAudioCtx(){
+        if (!audioCtx) {
+          try {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          } catch(e) { audioCtx = null; }
+        }
+        return audioCtx;
+      }
+      function playFlipSound(){
+        const ctx = ensureAudioCtx();
+        if(!ctx) return;
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'sine';
+        o.frequency.setValueAtTime(700, ctx.currentTime);
+        o.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.28);
+        g.gain.setValueAtTime(0.0001, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.035, ctx.currentTime + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.28);
+        o.connect(g); g.connect(ctx.destination);
+        o.start();
+        o.stop(ctx.currentTime + 0.28);
+      }
+
+      // tiny spark creator (appears near click)
+      function createTinySpark(x,y){
+        const s = document.createElement('div');
+        s.className = 'tiny-spark';
+        s.style.left = (x - 5) + 'px';
+        s.style.top = (y - 5) + 'px';
+        book.appendChild(s);
+        // animate
+        s.style.transform = 'translateY(0)';
+        s.style.opacity = '1';
+        s.style.animation = 'sparkleFloat 700ms ease-out forwards';
+        setTimeout(()=> s.remove(), 800);
+      }
+
+      // extra falling petals for atmosphere (separate from hearts)
+      function createPetalAtmosphere(){
+        const p = document.createElement('div');
+        p.style.position = 'absolute';
+        p.style.width = p.style.height = (8 + Math.random()*12) + 'px';
+        p.style.left = (10 + Math.random()*80) + '%';
+        p.style.top = '-6%';
+        p.style.background = 'radial-gradient(circle at 40% 30%, #fff, rgba(255,170,190,0.95))';
+        p.style.borderRadius = '6px';
+        p.style.opacity = 0.95;
+        p.style.pointerEvents = 'none';
+        p.style.transform = 'rotate(' + (Math.random()*120 - 60) + 'deg)';
+        p.style.boxShadow = '0 6px 18px rgba(255,140,170,0.12)';
+        p.style.transition = 'transform 6s linear, top 6s linear, opacity 1s linear 4s';
+        book.appendChild(p);
+        // animate by setting top after small delay
+        requestAnimationFrame(()=> {
+          p.style.top = '120%';
+          p.style.transform = 'translateX(' + (Math.random()*30 - 15) + 'px) rotate(' + (Math.random()*360) + 'deg)';
+        });
+        setTimeout(()=> {
+          p.style.opacity = '0';
+          setTimeout(()=> p.remove(), 900);
+        }, 5200);
+      }
+      // start gentle petals
+      const petalTimer = setInterval(createPetalAtmosphere, 1400);
+
+      // hook into page clicks to add glow, sound, spark
+      const pageNodes = document.querySelectorAll('.page');
+      pageNodes.forEach(p => {
+        p.addEventListener('click', (ev) => {
+          // main flip sound
+          try { playFlipSound(); } catch(e){}
+
+          // brief glowing effect
+          p.classList.add('flipping-glow');
+          setTimeout(()=> p.classList.remove('flipping-glow'), 420);
+
+          // tiny spark at click
+          const x = ev.clientX || (ev.pageX - window.pageXOffset);
+          const y = ev.clientY || (ev.pageY - window.pageYOffset);
+          createTinySpark(x, y);
+        });
+      });
+
+      // ensure audio context created on first user gesture (polite autoplay)
+      function initAudioOnGesture(){
+        document.removeEventListener('pointerdown', initAudioOnGesture);
+        ensureAudioCtx();
+      }
+      document.addEventListener('pointerdown', initAudioOnGesture, { once: true });
+
+      // Cleanup if page hidden (save CPU)
+      document.addEventListener('visibilitychange', () => {
+        if(document.hidden){
+          clearInterval(petalTimer);
+        }
+      });
+
+    })();
   </script>
 </body>
 </html>
